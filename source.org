@@ -8,11 +8,20 @@
 #+REVEAL_MAX_SCALE: 1
 #+REVEAL_MARGIN: 0
 #+OPTIONS: toc:nil 
-#+OPTIONS: reveal_width:2400 reveal_height:1600
 #+OPTIONS: num:nil
 #+OPTIONS: ^:nil
 #+REVEAL_TITLE_SLIDE_BACKGROUND: ./images/Background1.png
 #+EXPORT_FILE_NAME: index.html
+
+#+BEGIN_COMMENT
+After export:
+
+- Add to Reveal.initialize at bottom of index.html
+width: "95%",
+height: "95%",
+
+- Remove created date from top 
+#+END_COMMENT
 
 * What we'll cover
  - High level overview of data in TRLN Discovery
