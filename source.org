@@ -69,15 +69,15 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+END_NOTES
 
 * ETL overview - Central processes
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
-| Application    | Uses...             | To...                                                                                                                    |
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
-| ((([[https://github.com/trln/trln-ingest][Spofford]]))) |                     | Maintain last-ingested Argot for each item, transaction info in PostgreSQL db                                            |
-|                | ((([[https://github.com/trln/argot-ruby][argot-ruby]])))    | Basic validation of Argot; Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing  |
-|                |                     | Manage Solr indexing processes (adds, updates, deletes)                                                                  |
-| Solr           |                     | The actual underlying index used by the Blacklight application                                                           |
-|                | dynamic Solr schema | Create additional copies/versions of incoming fields for use in Solr (resulting fields having different suffixes)        |
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
+|----------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Application    | Uses...             | To...                                                                                                                                                                  |
+|----------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ((([[https://github.com/trln/trln-ingest][Spofford]]))) |                     | Maintain last-ingested Argot for each item, transaction info in PostgreSQL db                                                                                          |
+|                | ((([[https://github.com/trln/argot-ruby][argot-ruby]])))    | Basic validation of Argot; Flatten/explode hierarchical Argot according to specified patterns ("Enriched Argot"); Add field name suffixes required for Solr processing |
+|                |                     | Manage Solr indexing processes (adds, updates, deletes)                                                                                                                |
+| Solr           |                     | The actual underlying index used by the Blacklight application                                                                                                         |
+|                | dynamic Solr schema | Create additional copies/versions of incoming fields for use in Solr (resulting fields having different suffixes)                                                      |
+|----------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 
 * Transformation: MARC -> Argot - Name data
@@ -161,7 +161,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 
 #+REVEAL_HTML: </div>
 
-* Transformation: Argot -> Flattened, suffixed Argot - Name data
+* Transformation: Argot -> Enriched Argot - Name data
 Illustrates Argot as abstract data pattern language
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
@@ -212,8 +212,28 @@ Illustrates Argot as abstract data pattern language
   "Intiz̤ār Ḥusain, 1925-2016.",
   "Intiz̤ār Ḥusain, 1925-2016."
 ],
-"statement_of_responsibility_t_stored": "Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
+"statement_of_responsibility_t_stored": "Intizar Husain ; translated
+   by Nishat Zaidi and Alok Bhalla."
 }
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+* Transformation: Enriched Argot -> Solr
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+One Enriched Argot field becomes two Solr fields
+#+BEGIN_SRC 
+statement_of_responsibility_t_stored
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+BEGIN_SRC 
+statement_of_responsibility_a
+statement_of_responsibility_t
 #+END_SRC
 
 #+REVEAL_HTML: </div>
