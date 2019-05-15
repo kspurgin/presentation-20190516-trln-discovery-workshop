@@ -1,0 +1,37 @@
+#+AUTHOR: Kristina M. Spurgin
+#+TITLE: Overview of TRLN Discovery Data
+#+EMAIL: kspurgin@email.unc.edu
+#+DATE: 2019-05-16
+#+REVEAL_TRANS: none
+#+REVEAL_THEME: sky
+#+REVEAL_MIN_SCALE: 1
+#+REVEAL_MAX_SCALE: 1
+#+REVEAL_MARGIN: 0
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: ^:nil
+#+REVEAL_TITLE_SLIDE_BACKGROUND: ./images/Background1.png
+#+EXPORT_FILE_NAME: index.html
+
+* What we'll cover
+ - Quick intro to Wikidata
+ - Selected GLAM Wikidata activity
+ - Plans at UNC Chapel Hill Libraries
+
+
+#+NAME:  fig:label.png
+#+ATTR_HTML: :height 100%
+[[./images/label.png]]
+
+|----------+----+------------+----+-------------------------------------|
+| [[https://en.wikipedia.org/wiki/Main_Page][Wikipedia]] | <-  | *[[https://www.mediawiki.org/wiki/MediaWiki][MediaWiki]]* | -> | [[https://internal.lib.unc.edu/wikis/staff/index.php/Main_Page][UNC Libraries Staff Wiki]] |
+| [[https://www.wikidata.org/wiki/Wikidata:Main_Page][Wikidata]] | <- | *[[http://wikiba.se/][Wikibase]]* | -> | (UNC Libraries Linked Data portal?) |
+|----------+----+------------+----+-------------------------------------|
+
+#+BEGIN_NOTES
+You don't get very far into learning about Wikidata before you start hearing about Wikibase. This can be a little confusing.
+
+Wikibase is a collection of applications and libraries for creating, managing and sharing structured data. It is an open source project and everyone is welcome to join in development. --[[http://wikiba.se/][Wikibase project home]]
+#+END_NOTES
+
+
