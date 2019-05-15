@@ -80,7 +80,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 |----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
 
 
-* Transformation: MARC -> Argot
+* Transformation: MARC -> Argot - Name data
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 
@@ -100,74 +100,61 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
 
 #+BEGIN_SRC 
-{
-   "names":[
-      {
-         "name":"Intiz̤ār Ḥusain, 1925-2016",
-         "rel":[
-            "author"
-         ],
-         "type":"creator"
-      },
-      {
-         "name":"Zaidi, Nishat",
-         "rel":[
-            "translator"
-         ],
-         "type":"contributor"
-      },
-      {
-         "name":"Bhalla, Alok",
-         "rel":[
-            "translator"
-         ],
-         "type":"contributor"
-      }
+"names":[
+      {"name":"Intiz̤ār Ḥusain, 1925-2016",
+       "rel":["author"],
+       "type":"creator"},
+      {"name":"Zaidi, Nishat",
+       "rel":["translator"},
+      {"name":"Bhalla, Alok",
+       "rel":["translator"],
+       "type":"contributor"}
    ],
-   "creator_main":[
-      "Intiz̤ār Ḥusain, 1925-2016, author"
-   ],
-   "title_main":[
-      {
-         "value":"Day ; and, Dastan : two novellas"
-      }
-   ],
-   "title_sort":"day and dastan two novellas",
-   "included_work":[
-      {
-         "type":"included",
-         "author":"Intiz̤ār Ḥusain, 1925-2016.",
-         "title":[
-            "Din.",
-            "English."
-         ]
-      },
-      {
-         "type":"included",
-         "author":"Intiz̤ār Ḥusain, 1925-2016.",
-         "title":[
-            "Dāstān.",
-            "English."
-         ]
-      }
-   ],
-   "this_work":[
-      {
-         "type":"this",
-         "author":"Intiz̤ār Ḥusain, 1925-2016",
-         "title":[
-            "Din aur dāstān.",
-            "English"
-         ]
-      }
-   ],
-   "statement_of_responsibility":[
-      {
-         "value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
-      }
-   ],
-}
+"creator_main":["Intiz̤ār Ḥusain, 1925-2016, author"],
+"statement_of_responsibility":[
+   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."}
+],
+#+END_SRC
 
+#+REVEAL_HTML: </div>
+
+* Transformation: MARC -> Argot - Title and work data
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+BEGIN_SRC 
+=100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
+=240  10$aDin aur dāstān.$lEnglish
+=245  10$aDay ;$band, Dastan : two novellas /$cIntizar Husain ;
+        translated by Nishat Zaidi and Alok Bhalla.
+=700  1\$aZaidi, Nishat,$etranslator.
+=700  1\$aBhalla, Alok,$etranslator.
+=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDin.$lEnglish.
+=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDāstān.$lEnglish.
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+BEGIN_SRC 
+"title_main":[
+   {"value":"Day ; and, Dastan : two novellas"}
+],
+"title_sort":"day and dastan two novellas",
+"included_work":[
+   {"type":"included",
+    "author":"Intiz̤ār Ḥusain, 1925-2016.",
+    "title":["Din.", "English."]}
+   {"type":"included",
+    "author":"Intiz̤ār Ḥusain, 1925-2016.",
+    "title":["Dāstān.", "English."]}
+],
+"this_work":[
+   {"type":"this",
+    "author":"Intiz̤ār Ḥusain, 1925-2016",
+    "title":["Din aur dāstān.", "English"]}
+],
 #+END_SRC
 
 #+REVEAL_HTML: </div>
