@@ -512,7 +512,7 @@ body {
           perspective-origin: 50% 40%; }
 
 .reveal .slides > section {
-  -ms-perspective: 600px; }
+  -ms-perspective: 1200px; }
 
 .reveal .slides > section,
 .reveal .slides > section > section {
