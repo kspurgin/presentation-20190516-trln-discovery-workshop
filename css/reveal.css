@@ -1009,8 +1009,8 @@ body {
   height: auto;
   min-height: 0;
   top: 0;
-  left: -50%;
-  margin: 70px 0;
+  left: 0;
+  margin: 0 0;
   -webkit-transform: none;
           transform: none; }
 
@@ -1030,8 +1030,8 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  -webkit-perspective: 600px;
-          perspective: 600px; }
+  -webkit-perspective: 1200px;
+          perspective: 1200px; }
 
 .reveal .slide-background {
   display: none;
@@ -1208,8 +1208,8 @@ body {
 .reveal.overview {
   -webkit-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%;
-  -webkit-perspective: 700px;
-          perspective: 700px; }
+  -webkit-perspective: 1200px;
+          perspective: 1200px; }
   .reveal.overview .slides {
     -moz-transform-style: preserve-3d; }
   .reveal.overview .slides section {
