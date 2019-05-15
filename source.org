@@ -162,6 +162,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+REVEAL_HTML: </div>
 
 * Transformation: Argot -> Flattened, suffixed Argot - Name data
+Illustrates Argot as abstract data pattern language
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 
