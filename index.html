@@ -26,12 +26,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:12</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:14</p>
 </section>
 
 <section>
-<section id="slide-org31a1a58">
-<h2 id="org31a1a58">What we'll cover</h2>
+<section id="slide-org235aaa2">
+<h2 id="org235aaa2">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org6825f9e">
-<h2 id="org6825f9e">What we won't cover</h2>
+<section id="slide-org1d88869">
+<h2 id="org1d88869">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -69,8 +69,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org846f5cf">
-<h2 id="org846f5cf">ETL overview - Institution-specific processes</h2>
+<section id="slide-org580e464">
+<h2 id="org580e464">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -126,8 +126,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orga77bc99">
-<h2 id="orga77bc99">ETL overview - Central processes</h2>
+<section id="slide-orgb069c78">
+<h2 id="orgb069c78">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -182,14 +182,15 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orgc8bd523">
-<h2 id="orgc8bd523">Transformation: MARC -&gt; Argot</h2>
+<section id="slide-org894d891">
+<h2 id="org894d891">Transformation: MARC -&gt; Argot</h2>
 <div class="column" style="float:left; width: 50%">
 
 <pre  class="example">
 =100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
 =240  10$aDin aur dāstān.$lEnglish
-=245  10$aDay ;$band, Dastan : two novellas /$cIntizar Husain ; translated by Nishat Zaidi and Alok Bhalla.
+=245  10$aDay ;$band, Dastan : two novellas /$cIntizar Husain ;
+	translated by Nishat Zaidi and Alok Bhalla.
 =700  1\$aZaidi, Nishat,$etranslator.
 =700  1\$aBhalla, Alok,$etranslator.
 =700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDin.$lEnglish.
@@ -279,10 +280,10 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org25bcbf0">
-<h2 id="org25bcbf0">blank</h2>
+<section id="slide-org0e0e323">
+<h2 id="org0e0e323">blank</h2>
 
-<div id="org5245f75" class="figure">
+<div id="org076d1f1" class="figure">
 <p><img src="./images/label.png" alt="label.png" height="100%" />
 </p>
 </div>
