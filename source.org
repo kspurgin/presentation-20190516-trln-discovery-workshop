@@ -32,21 +32,42 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
    - Syndetics data merged into bib data
    - Data pulled in from various APIs at catalog page load time
 
-* ETL overview
+* ETL overview - what each institution does locally
 Source data (MARCXML or MARC binary)
+
 ⬇️
----[[https://github.com/trln/marc-to-argot][MARC-to-Argot]]---
+
+((([[https://github.com/trln/marc-to-argot][MARC-to-Argot]])))
+
 ⬇️
-Argot (nested JSON format)
+
+[[https://github.com/trln/data-documentation/tree/master/argot][Argot]] (nested JSON format)
+
+⬇️
+
+((([[https://github.com/trln/spofford-client][spofford-client]]))) 
+
+#+BEGIN_NOTES
+MARC-to-Argot:
+ - allows most of the standard transformation of MARC to Argot to be written ONCE and used by all institutions
+ - any institution can override the way any Argot field is populated, if they need to do something that isn't standard
+
+spofford-client:
+ - command line tool for packaging up Argot files and sending them to Spofford for ingest
+#+END_NOTES
+
+* ETL overview - central
+|----------------+------------------+--------------------------------------------------------------------------------------------------------------------------|
+| ((([[https://github.com/trln/trln-ingest][Spofford]]))) |                  | Maintain last-ingested Argot for each item, transaction info in PostgreSQL db                                            |
+|                | ((([[https://github.com/trln/argot-ruby][argot-ruby]]))) | Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing |
+|                |                  | Manage Solr indexing processes                                                                                           |
+|----------------+------------------+--------------------------------------------------------------------------------------------------------------------------|
+
 
 #+NAME:  fig:label.png
 #+ATTR_HTML: :height 100%
 [[./images/label.png]]
 
-|----------+----+------------+----+-------------------------------------|
-| [[https://en.wikipedia.org/wiki/Main_Page][Wikipedia]] | <-  | *[[https://www.mediawiki.org/wiki/MediaWiki][MediaWiki]]* | -> | [[https://internal.lib.unc.edu/wikis/staff/index.php/Main_Page][UNC Libraries Staff Wiki]] |
-| [[https://www.wikidata.org/wiki/Wikidata:Main_Page][Wikidata]] | <- | *[[http://wikiba.se/][Wikibase]]* | -> | (UNC Libraries Linked Data portal?) |
-|----------+----+------------+----+-------------------------------------|
 
 
 

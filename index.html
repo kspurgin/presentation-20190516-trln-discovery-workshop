@@ -26,12 +26,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 11:24</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 11:53</p>
 </section>
 
 <section>
-<section id="slide-org304cacb">
-<h2 id="org304cacb">What we'll cover</h2>
+<section id="slide-org7c28db9">
+<h2 id="org7c28db9">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org1cbdc60">
-<h2 id="org1cbdc60">What we won't cover</h2>
+<section id="slide-org1e93c8b">
+<h2 id="org1e93c8b">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -69,22 +69,61 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org443c89b">
-<h2 id="org443c89b">ETL overview</h2>
+<section id="slide-orgeeb96aa">
+<h2 id="orgeeb96aa">ETL overview - what each institution does locally</h2>
 <p>
 Source data (MARCXML or MARC binary)
-⬇️
----<a href="https://github.com/trln/marc-to-argot">MARC-to-Argot</a>&#x2014;
-⬇️
-Argot (nested JSON format)
 </p>
 
-
-<div id="orgbca23cb" class="figure">
-<p><img src="./images/label.png" alt="label.png" height="100%" />
+<p>
+⬇️
 </p>
-</div>
 
+<p>
+(((<a href="https://github.com/trln/marc-to-argot">MARC-to-Argot</a>)))
+</p>
+
+<p>
+⬇️
+</p>
+
+<p>
+<a href="https://github.com/trln/data-documentation/tree/master/argot">Argot</a> (nested JSON format)
+</p>
+
+<p>
+⬇️
+</p>
+
+<p>
+(((<a href="https://github.com/trln/spofford-client">spofford-client</a>))) 
+</p>
+
+<aside class="notes">
+<p>
+MARC-to-Argot:
+</p>
+<ul>
+<li>allows most of the standard transformation of MARC to Argot to be written ONCE and used by all institutions</li>
+<li>any institution can override the way any Argot field is populated, if they need to do something that isn't standard</li>
+
+</ul>
+
+<p>
+spofford-client:
+</p>
+<ul>
+<li>command line tool for packaging up Argot files and sending them to Spofford for ingest</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdfe72a5">
+<h2 id="orgdfe72a5">ETL overview - central</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -94,29 +133,34 @@ Argot (nested JSON format)
 <col  class="org-left" />
 
 <col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left"><a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia</a></td>
-<td class="org-left">&lt;-</td>
-<td class="org-left"><b><a href="https://www.mediawiki.org/wiki/MediaWiki">MediaWiki</a></b></td>
-<td class="org-left">-&gt;</td>
-<td class="org-left"><a href="https://internal.lib.unc.edu/wikis/staff/index.php/Main_Page">UNC Libraries Staff Wiki</a></td>
+<td class="org-left">(((<a href="https://github.com/trln/trln-ingest">Spofford</a>)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Maintain last-ingested Argot for each item, transaction info in PostgreSQL db</td>
 </tr>
 
 <tr>
-<td class="org-left"><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a></td>
-<td class="org-left">&lt;-</td>
-<td class="org-left"><b><a href="http://wikiba.se/">Wikibase</a></b></td>
-<td class="org-left">-&gt;</td>
-<td class="org-left">(UNC Libraries Linked Data portal?)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(((<a href="https://github.com/trln/argot-ruby">argot-ruby</a>)))</td>
+<td class="org-left">Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Manage Solr indexing processes</td>
 </tr>
 </tbody>
 </table>
+
+
+
+<div id="orgc232bc4" class="figure">
+<p><img src="./images/label.png" alt="label.png" height="100%" />
+</p>
+</div>
 </section>
 </section>
 </div>
