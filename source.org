@@ -32,7 +32,7 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
    - Syndetics data merged into bib data
    - Data pulled in from various APIs at catalog page load time
 
-* ETL overview - Institution-specific processes
+* ETL overview - what each institution does locally
 Source data (MARCXML or MARC binary)
 
 ⬇️
@@ -54,117 +54,16 @@ MARC-to-Argot:
 
 spofford-client:
  - command line tool for packaging up Argot files and sending them to Spofford for ingest
-
-Non-MARC source data note: Basically any data that can be transformed into valid Argot can then be ingested into Spofford, which accepts only Argot and cares not for source data format. Processes to create valid Argot from non-MARC sources will be institution-specific.
 #+END_NOTES
 
-* ETL overview - Central processes
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
-| Application    | Uses...             | To...                                                                                                                    |
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
-| ((([[https://github.com/trln/trln-ingest][Spofford]]))) |                     | Maintain last-ingested Argot for each item, transaction info in PostgreSQL db                                            |
-|                | ((([[https://github.com/trln/argot-ruby][argot-ruby]])))    | Basic validation of Argot; Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing  |
-|                |                     | Manage Solr indexing processes (adds, updates, deletes)                                                                  |
-| Solr           |                     | The actual underlying index used by the Blacklight application                                                           |
-|                | dynamic Solr schema | Create additional copies/versions of incoming fields for use in Solr (resulting fields having different suffixes)        |
-|----------------+---------------------+--------------------------------------------------------------------------------------------------------------------------|
+* ETL overview - central
+|----------------+------------------+--------------------------------------------------------------------------------------------------------------------------|
+| ((([[https://github.com/trln/trln-ingest][Spofford]]))) |                  | Maintain last-ingested Argot for each item, transaction info in PostgreSQL db                                            |
+|                | ((([[https://github.com/trln/argot-ruby][argot-ruby]]))) | Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing |
+|                |                  | Manage Solr indexing processes                                                                                           |
+|----------------+------------------+--------------------------------------------------------------------------------------------------------------------------|
 
 
-* Transformation: MARC -> Argot
-
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
-
-#+BEGIN_SRC 
-=100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
-=240  10$aDin aur dāstān.$lEnglish
-=245  10$aDay ;$band, Dastan : two novellas /$cIntizar Husain ; translated by Nishat Zaidi and Alok Bhalla.
-=700  1\$aZaidi, Nishat,$etranslator.
-=700  1\$aBhalla, Alok,$etranslator.
-=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDin.$lEnglish.
-=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDāstān.$lEnglish.
-#+END_SRC
-
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
-
-#+BEGIN_SRC 
-{
-   "names":[
-      {
-         "name":"Intiz̤ār Ḥusain, 1925-2016",
-         "rel":[
-            "author"
-         ],
-         "type":"creator"
-      },
-      {
-         "name":"Zaidi, Nishat",
-         "rel":[
-            "translator"
-         ],
-         "type":"contributor"
-      },
-      {
-         "name":"Bhalla, Alok",
-         "rel":[
-            "translator"
-         ],
-         "type":"contributor"
-      }
-   ],
-   "creator_main":[
-      "Intiz̤ār Ḥusain, 1925-2016, author"
-   ],
-   "title_main":[
-      {
-         "value":"Day ; and, Dastan : two novellas"
-      }
-   ],
-   "title_sort":"day and dastan two novellas",
-   "included_work":[
-      {
-         "type":"included",
-         "author":"Intiz̤ār Ḥusain, 1925-2016.",
-         "title":[
-            "Din.",
-            "English."
-         ]
-      },
-      {
-         "type":"included",
-         "author":"Intiz̤ār Ḥusain, 1925-2016.",
-         "title":[
-            "Dāstān.",
-            "English."
-         ]
-      }
-   ],
-   "this_work":[
-      {
-         "type":"this",
-         "author":"Intiz̤ār Ḥusain, 1925-2016",
-         "title":[
-            "Din aur dāstān.",
-            "English"
-         ]
-      }
-   ],
-   "statement_of_responsibility":[
-      {
-         "value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
-      }
-   ],
-}
-
-#+END_SRC
-
-#+REVEAL_HTML: </div>
-
-
-
-
-* blank
 #+NAME:  fig:label.png
 #+ATTR_HTML: :height 100%
 [[./images/label.png]]
