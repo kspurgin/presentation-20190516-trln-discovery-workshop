@@ -26,16 +26,16 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:42</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:47</p>
 </section>
 
 <section>
-<section id="slide-orgefc99dc">
-<h2 id="orgefc99dc">What we'll cover</h2>
+<section id="slide-org5af514d">
+<h2 id="org5af514d">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
-<li>Data model intro</li>
+<li>Brief intro to conceptual foundations for the data model</li>
 <li><b>Focus on MARC as initial data source</b></li>
 
 </ul>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org0c56317">
-<h2 id="org0c56317">What we won't cover</h2>
+<section id="slide-orgac371ad">
+<h2 id="orgac371ad">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -69,8 +69,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orgbcade53">
-<h2 id="orgbcade53">ETL overview - Institution-specific processes</h2>
+<section id="slide-orge4f75bb">
+<h2 id="orge4f75bb">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -126,8 +126,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org33b9123">
-<h2 id="org33b9123">ETL overview - Central processes</h2>
+<section id="slide-org7549da9">
+<h2 id="org7549da9">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -182,9 +182,12 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org00a8d27">
-<h2 id="org00a8d27">Transformation: MARC -&gt; Argot - Name data</h2>
+<section id="slide-org0245e89">
+<h2 id="org0245e89">Transformation: MARC -&gt; Argot - Name data</h2>
 <div class="column" style="float:left; width: 50%">
+<p>
+<b>MARC</b>
+</p>
 
 <pre  class="example">
 =100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
@@ -200,6 +203,9 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </div>
 
 <div class="column" style="float:right; width: 50%">
+<p>
+<b>Argot</b>
+</p>
 
 <pre  class="example">
 "names":[
@@ -225,9 +231,12 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org24925a7">
-<h2 id="org24925a7">Transformation: MARC -&gt; Argot - Title and work data</h2>
+<section id="slide-orgd237ffe">
+<h2 id="orgd237ffe">Transformation: MARC -&gt; Argot - Title and work data</h2>
 <div class="column" style="float:left; width: 50%">
+<p>
+<b>MARC</b>
+</p>
 
 <pre  class="example">
 =100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
@@ -243,6 +252,9 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </div>
 
 <div class="column" style="float:right; width: 50%">
+<p>
+<b>Argot</b>
+</p>
 
 <pre  class="example">
 "title_main":[
@@ -269,13 +281,16 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orgc9865d4">
-<h2 id="orgc9865d4">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
+<section id="slide-org40e152d">
+<h2 id="org40e152d">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
 <p>
 Illustrates Argot as abstract data pattern language
 </p>
 
 <div class="column" style="float:left; width: 50%">
+<p>
+<b>Argot</b>
+</p>
 
 <pre  class="example">
 "names":[
@@ -299,6 +314,9 @@ Illustrates Argot as abstract data pattern language
 </div>
 
 <div class="column" style="float:right; width: 50%">
+<p>
+<b>Enriched Argot</b>
+</p>
 
 <pre  class="example">
 "names_creator_t": "Intiz̤ār Ḥusain, 1925-2016, author",
@@ -333,13 +351,17 @@ Illustrates Argot as abstract data pattern language
 </section>
 </section>
 <section>
-<section id="slide-org7d3fedc">
-<h2 id="org7d3fedc">Transformation: Enriched Argot -&gt; Solr</h2>
-<div class="column" style="float:left; width: 50%">
-
+<section id="slide-org626b9c6">
+<h2 id="org626b9c6">Transformation: Enriched Argot -&gt; Solr</h2>
 <p>
 One Enriched Argot field becomes two Solr fields
 </p>
+
+<div class="column" style="float:left; width: 50%">
+<p>
+<b>Enriched Argot field</b>
+</p>
+
 <pre  class="example">
 statement_of_responsibility_t_stored
 </pre>
@@ -347,6 +369,9 @@ statement_of_responsibility_t_stored
 </div>
 
 <div class="column" style="float:right; width: 50%">
+<p>
+<b>Solr fields</b>
+</p>
 
 <pre  class="example">
 statement_of_responsibility_a
@@ -360,10 +385,10 @@ statement_of_responsibility_t
 </section>
 </section>
 <section>
-<section id="slide-orgacf96bd">
-<h2 id="orgacf96bd">blank</h2>
+<section id="slide-orgbbd0efb">
+<h2 id="orgbbd0efb">blank</h2>
 
-<div id="orgede1728" class="figure">
+<div id="org88047b2" class="figure">
 <p><img src="./images/label.png" alt="label.png" height="100%" />
 </p>
 </div>

@@ -26,7 +26,7 @@ height: "95%",
 * What we'll cover
  - High level overview of data in TRLN Discovery
  - ETL process/tooling
- - Data model intro
+ - Brief intro to conceptual foundations for the data model
  - *Focus on MARC as initial data source*
 
 #+BEGIN_NOTES
@@ -83,6 +83,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 * Transformation: MARC -> Argot - Name data
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*MARC*
 
 #+BEGIN_SRC 
 =100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
@@ -98,6 +99,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+*Argot*
 
 #+BEGIN_SRC 
 "names":[
@@ -123,6 +125,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 * Transformation: MARC -> Argot - Title and work data
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*MARC*
 
 #+BEGIN_SRC 
 =100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
@@ -138,6 +141,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+*Argot*
 
 #+BEGIN_SRC 
 "title_main":[
@@ -165,6 +169,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 Illustrates Argot as abstract data pattern language
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*Argot*
 
 #+BEGIN_SRC 
 "names":[
@@ -188,6 +193,7 @@ Illustrates Argot as abstract data pattern language
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+*Enriched Argot*
 
 #+BEGIN_SRC 
 "names_creator_t": "Intiz̤ār Ḥusain, 1925-2016, author",
@@ -220,9 +226,11 @@ Illustrates Argot as abstract data pattern language
 #+REVEAL_HTML: </div>
 
 * Transformation: Enriched Argot -> Solr
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
-
 One Enriched Argot field becomes two Solr fields
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*Enriched Argot field*
+
 #+BEGIN_SRC 
 statement_of_responsibility_t_stored
 #+END_SRC
@@ -230,6 +238,7 @@ statement_of_responsibility_t_stored
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+*Solr fields*
 
 #+BEGIN_SRC 
 statement_of_responsibility_a
