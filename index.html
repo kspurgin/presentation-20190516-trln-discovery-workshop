@@ -26,12 +26,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:24</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:32</p>
 </section>
 
 <section>
-<section id="slide-orga850284">
-<h2 id="orga850284">What we'll cover</h2>
+<section id="slide-orgc7f42ae">
+<h2 id="orgc7f42ae">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orge92ab1d">
-<h2 id="orge92ab1d">What we won't cover</h2>
+<section id="slide-org58d482a">
+<h2 id="org58d482a">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -69,8 +69,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orge34769a">
-<h2 id="orge34769a">ETL overview - Institution-specific processes</h2>
+<section id="slide-orgc2a4ea2">
+<h2 id="orgc2a4ea2">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -126,8 +126,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org1433310">
-<h2 id="org1433310">ETL overview - Central processes</h2>
+<section id="slide-orga890c19">
+<h2 id="orga890c19">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -182,8 +182,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org96ace5c">
-<h2 id="org96ace5c">Transformation: MARC -&gt; Argot - Name data</h2>
+<section id="slide-org9b7bd8f">
+<h2 id="org9b7bd8f">Transformation: MARC -&gt; Argot - Name data</h2>
 <div class="column" style="float:left; width: 50%">
 
 <pre  class="example">
@@ -207,14 +207,16 @@ Non-MARC source data note: Basically any data that can be transformed into valid
        "rel":["author"],
        "type":"creator"},
       {"name":"Zaidi, Nishat",
-       "rel":["translator"},
+       "rel":["translator",
+       "type":"contributor"},
       {"name":"Bhalla, Alok",
        "rel":["translator"],
        "type":"contributor"}
    ],
 "creator_main":["Intiz̤ār Ḥusain, 1925-2016, author"],
 "statement_of_responsibility":[
-   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."}
+   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok
+	     Bhalla."}
 ],
 </pre>
 
@@ -223,8 +225,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orgc92be1e">
-<h2 id="orgc92be1e">Transformation: MARC -&gt; Argot - Title and work data</h2>
+<section id="slide-org25d9f78">
+<h2 id="org25d9f78">Transformation: MARC -&gt; Argot - Title and work data</h2>
 <div class="column" style="float:left; width: 50%">
 
 <pre  class="example">
@@ -264,16 +266,74 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 
 </div>
 
+</section>
+</section>
+<section>
+<section id="slide-org2fe3d59">
+<h2 id="org2fe3d59">Transformation: Argot -&gt; Flattened, suffixed Argot - Name data</h2>
+<div class="column" style="float:left; width: 50%">
+
+<pre  class="example">
+"names":[
+      {"name":"Intiz̤ār Ḥusain, 1925-2016",
+       "rel":["author"],
+       "type":"creator"},
+      {"name":"Zaidi, Nishat",
+       "rel":["translator",
+       "type":"contributor"},
+      {"name":"Bhalla, Alok",
+       "rel":["translator"],
+       "type":"contributor"}
+   ],
+"creator_main":["Intiz̤ār Ḥusain, 1925-2016, author"],
+"statement_of_responsibility":[
+   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok
+	     Bhalla."}
+],
+</pre>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<pre  class="example">
+"names_creator_t": "Intiz̤ār Ḥusain, 1925-2016, author",
+"names_contributor_t": [
+  "Zaidi, Nishat, translator",
+  "Bhalla, Alok, translator"
+],
+"author_facet_f": [
+  "Intiz̤ār Ḥusain, 1925-2016",
+  "Zaidi, Nishat",
+  "Bhalla, Alok"
+],
+"names_a": [
+  "{\"name\":\"Intiz̤ār Ḥusain, 1925-2016\",\"rel\":\"author\"}",
+  "{\"name\":\"Zaidi, Nishat\",\"rel\":\"translator\"}",
+  "{\"name\":\"Bhalla, Alok\",\"rel\":\"translator\"}"
+],
+"author_suggest": [
+  "Intiz̤ār Ḥusain, 1925-2016",
+  "Zaidi, Nishat",
+  "Bhalla, Alok",
+  "Intiz̤ār Ḥusain, 1925-2016.",
+  "Intiz̤ār Ḥusain, 1925-2016."
+],
+"statement_of_responsibility_t_stored": "Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
+}
+</pre>
+
+</div>
 
 
 
 </section>
 </section>
 <section>
-<section id="slide-org1590d7d">
-<h2 id="org1590d7d">blank</h2>
+<section id="slide-org468ba4c">
+<h2 id="org468ba4c">blank</h2>
 
-<div id="org2dc1752" class="figure">
+<div id="org4b7794e" class="figure">
 <p><img src="./images/label.png" alt="label.png" height="100%" />
 </p>
 </div>

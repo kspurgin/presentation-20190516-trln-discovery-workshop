@@ -105,14 +105,16 @@ Non-MARC source data note: Basically any data that can be transformed into valid
        "rel":["author"],
        "type":"creator"},
       {"name":"Zaidi, Nishat",
-       "rel":["translator"},
+       "rel":["translator",
+       "type":"contributor"},
       {"name":"Bhalla, Alok",
        "rel":["translator"],
        "type":"contributor"}
    ],
 "creator_main":["Intiz̤ār Ḥusain, 1925-2016, author"],
 "statement_of_responsibility":[
-   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."}
+   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok
+             Bhalla."}
 ],
 #+END_SRC
 
@@ -159,6 +161,61 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 
 #+REVEAL_HTML: </div>
 
+* Transformation: Argot -> Flattened, suffixed Argot - Name data
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+BEGIN_SRC 
+"names":[
+      {"name":"Intiz̤ār Ḥusain, 1925-2016",
+       "rel":["author"],
+       "type":"creator"},
+      {"name":"Zaidi, Nishat",
+       "rel":["translator",
+       "type":"contributor"},
+      {"name":"Bhalla, Alok",
+       "rel":["translator"],
+       "type":"contributor"}
+   ],
+"creator_main":["Intiz̤ār Ḥusain, 1925-2016, author"],
+"statement_of_responsibility":[
+   {"value":"Intizar Husain ; translated by Nishat Zaidi and Alok
+             Bhalla."}
+],
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+BEGIN_SRC 
+"names_creator_t": "Intiz̤ār Ḥusain, 1925-2016, author",
+"names_contributor_t": [
+  "Zaidi, Nishat, translator",
+  "Bhalla, Alok, translator"
+],
+"author_facet_f": [
+  "Intiz̤ār Ḥusain, 1925-2016",
+  "Zaidi, Nishat",
+  "Bhalla, Alok"
+],
+"names_a": [
+  "{\"name\":\"Intiz̤ār Ḥusain, 1925-2016\",\"rel\":\"author\"}",
+  "{\"name\":\"Zaidi, Nishat\",\"rel\":\"translator\"}",
+  "{\"name\":\"Bhalla, Alok\",\"rel\":\"translator\"}"
+],
+"author_suggest": [
+  "Intiz̤ār Ḥusain, 1925-2016",
+  "Zaidi, Nishat",
+  "Bhalla, Alok",
+  "Intiz̤ār Ḥusain, 1925-2016.",
+  "Intiz̤ār Ḥusain, 1925-2016."
+],
+"statement_of_responsibility_t_stored": "Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
+}
+#+END_SRC
+
+#+REVEAL_HTML: </div>
 
 
 
