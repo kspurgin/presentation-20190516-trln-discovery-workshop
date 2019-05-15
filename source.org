@@ -14,10 +14,30 @@
 #+EXPORT_FILE_NAME: index.html
 
 * What we'll cover
- - Quick intro to Wikidata
- - Selected GLAM Wikidata activity
- - Plans at UNC Chapel Hill Libraries
+ - High level overview of data in TRLN Discovery
+ - ETL process/tooling
+ - Data model intro
+ - *Focus on MARC as initial data source*
 
+#+BEGIN_NOTES
+Our ILS-based catalogs, with their MARC-based bibliographic data, are the largest data source. Tooling for this is well developed and centralized
+#+END_NOTES
+
+* What we won't cover
+ - The details of anything
+ - Processes for non-MARC data sources
+   - ICPSR Datasets shared records (DDI/XML record set)
+   - Odum Dataverse shared records (DC OAI feed)
+   - Finding aid data merged into bib data
+   - Syndetics data merged into bib data
+   - Data pulled in from various APIs at catalog page load time
+
+* ETL overview
+Source data (MARCXML or MARC binary)
+⬇️
+---[[https://github.com/trln/marc-to-argot][MARC-to-Argot]]---
+⬇️
+Argot (nested JSON format)
 
 #+NAME:  fig:label.png
 #+ATTR_HTML: :height 100%
@@ -28,10 +48,5 @@
 | [[https://www.wikidata.org/wiki/Wikidata:Main_Page][Wikidata]] | <- | *[[http://wikiba.se/][Wikibase]]* | -> | (UNC Libraries Linked Data portal?) |
 |----------+----+------------+----+-------------------------------------|
 
-#+BEGIN_NOTES
-You don't get very far into learning about Wikidata before you start hearing about Wikibase. This can be a little confusing.
-
-Wikibase is a collection of applications and libraries for creating, managing and sharing structured data. It is an open source project and everyone is welcome to join in development. --[[http://wikiba.se/][Wikibase project home]]
-#+END_NOTES
 
 
