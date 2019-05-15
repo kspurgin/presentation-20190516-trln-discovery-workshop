@@ -7,8 +7,6 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <link rel="stylesheet" href="./css/reveal.css"/>
 
 <link rel="stylesheet" href="./css/theme/sky.css" id="theme"/>
@@ -28,12 +26,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 11:53</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 13:32</p>
 </section>
 
 <section>
-<section id="slide-org7c28db9">
-<h2 id="org7c28db9">What we'll cover</h2>
+<section id="slide-orge07c702">
+<h2 id="orge07c702">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -52,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-org1e93c8b">
-<h2 id="org1e93c8b">What we won't cover</h2>
+<section id="slide-org3369392">
+<h2 id="org3369392">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -71,8 +69,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orgeeb96aa">
-<h2 id="orgeeb96aa">ETL overview - what each institution does locally</h2>
+<section id="slide-orga835fe5">
+<h2 id="orga835fe5">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -119,13 +117,17 @@ spofford-client:
 
 </ul>
 
+<p>
+Non-MARC source data note: Basically any data that can be transformed into valid Argot can then be ingested into Spofford, which accepts only Argot and cares not for source data format. Processes to create valid Argot from non-MARC sources will be institution-specific.
+</p>
+
 </aside>
 
 </section>
 </section>
 <section>
-<section id="slide-orgdfe72a5">
-<h2 id="orgdfe72a5">ETL overview - central</h2>
+<section id="slide-org4503fb0">
+<h2 id="org4503fb0">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -136,6 +138,13 @@ spofford-client:
 
 <col  class="org-left" />
 </colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Application</th>
+<th scope="col" class="org-left">Uses&#x2026;</th>
+<th scope="col" class="org-left">To&#x2026;</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td class="org-left">(((<a href="https://github.com/trln/trln-ingest">Spofford</a>)))</td>
@@ -146,20 +155,134 @@ spofford-client:
 <tr>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">(((<a href="https://github.com/trln/argot-ruby">argot-ruby</a>)))</td>
-<td class="org-left">Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing</td>
+<td class="org-left">Basic validation of Argot; Flatten/explode hierarchical Argot according to specified patterns; Add field name suffixes required for Solr processing</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">Manage Solr indexing processes</td>
+<td class="org-left">Manage Solr indexing processes (adds, updates, deletes)</td>
+</tr>
+
+<tr>
+<td class="org-left">Solr</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">The actual underlying index used by the Blacklight application</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">dynamic Solr schema</td>
+<td class="org-left">Create additional copies/versions of incoming fields for use in Solr (resulting fields having different suffixes)</td>
 </tr>
 </tbody>
 </table>
 
 
+</section>
+</section>
+<section>
+<section id="slide-orga44307c">
+<h2 id="orga44307c">Transformation: MARC -&gt; Argot</h2>
+<div class="column" style="float:left; width: 50%">
 
-<div id="orgc232bc4" class="figure">
+<pre  class="example">
+=100  0\$aIntiz̤ār Ḥusain,$d1925-2016,$eauthor.
+=240  10$aDin aur dāstān.$lEnglish
+=245  10$aDay ;$band, Dastan : two novellas /$cIntizar Husain ; translated by Nishat Zaidi and Alok Bhalla.
+=700  1\$aZaidi, Nishat,$etranslator.
+=700  1\$aBhalla, Alok,$etranslator.
+=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDin.$lEnglish.
+=700  02$aIntiz̤ār Ḥusain,$d1925-2016.$tDāstān.$lEnglish.
+</pre>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<pre  class="example">
+{
+   "names":[
+      {
+	 "name":"Intiz̤ār Ḥusain, 1925-2016",
+	 "rel":[
+	    "author"
+	 ],
+	 "type":"creator"
+      },
+      {
+	 "name":"Zaidi, Nishat",
+	 "rel":[
+	    "translator"
+	 ],
+	 "type":"contributor"
+      },
+      {
+	 "name":"Bhalla, Alok",
+	 "rel":[
+	    "translator"
+	 ],
+	 "type":"contributor"
+      }
+   ],
+   "creator_main":[
+      "Intiz̤ār Ḥusain, 1925-2016, author"
+   ],
+   "title_main":[
+      {
+	 "value":"Day ; and, Dastan : two novellas"
+      }
+   ],
+   "title_sort":"day and dastan two novellas",
+   "included_work":[
+      {
+	 "type":"included",
+	 "author":"Intiz̤ār Ḥusain, 1925-2016.",
+	 "title":[
+	    "Din.",
+	    "English."
+	 ]
+      },
+      {
+	 "type":"included",
+	 "author":"Intiz̤ār Ḥusain, 1925-2016.",
+	 "title":[
+	    "Dāstān.",
+	    "English."
+	 ]
+      }
+   ],
+   "this_work":[
+      {
+	 "type":"this",
+	 "author":"Intiz̤ār Ḥusain, 1925-2016",
+	 "title":[
+	    "Din aur dāstān.",
+	    "English"
+	 ]
+      }
+   ],
+   "statement_of_responsibility":[
+      {
+	 "value":"Intizar Husain ; translated by Nishat Zaidi and Alok Bhalla."
+      }
+   ],
+}
+
+</pre>
+
+</div>
+
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org41029a7">
+<h2 id="org41029a7">blank</h2>
+
+<div id="org5c21fb3" class="figure">
 <p><img src="./images/label.png" alt="label.png" height="100%" />
 </p>
 </div>
