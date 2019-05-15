@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Overview of TRLN Discovery Data</title>
+<meta name="author" content="(Kristina M. Spurgin)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./css/reveal.css"/>
+
+<link rel="stylesheet" href="./css/theme/sky.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 11:24</p>
+</section>
+
+<section>
+<section id="slide-org304cacb">
+<h2 id="org304cacb">What we'll cover</h2>
+<ul>
+<li>High level overview of data in TRLN Discovery</li>
+<li>ETL process/tooling</li>
+<li>Data model intro</li>
+<li><b>Focus on MARC as initial data source</b></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Our ILS-based catalogs, with their MARC-based bibliographic data, are the largest data source. Tooling for this is well developed and centralized
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org1cbdc60">
+<h2 id="org1cbdc60">What we won't cover</h2>
+<ul>
+<li>The details of anything</li>
+<li>Processes for non-MARC data sources
+<ul>
+<li>ICPSR Datasets shared records (DDI/XML record set)</li>
+<li>Odum Dataverse shared records (DC OAI feed)</li>
+<li>Finding aid data merged into bib data</li>
+<li>Syndetics data merged into bib data</li>
+<li>Data pulled in from various APIs at catalog page load time</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org443c89b">
+<h2 id="org443c89b">ETL overview</h2>
+<p>
+Source data (MARCXML or MARC binary)
+⬇️
+---<a href="https://github.com/trln/marc-to-argot">MARC-to-Argot</a>&#x2014;
+⬇️
+Argot (nested JSON format)
+</p>
+
+
+<div id="orgbca23cb" class="figure">
+<p><img src="./images/label.png" alt="label.png" height="100%" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia</a></td>
+<td class="org-left">&lt;-</td>
+<td class="org-left"><b><a href="https://www.mediawiki.org/wiki/MediaWiki">MediaWiki</a></b></td>
+<td class="org-left">-&gt;</td>
+<td class="org-left"><a href="https://internal.lib.unc.edu/wikis/staff/index.php/Main_Page">UNC Libraries Staff Wiki</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a></td>
+<td class="org-left">&lt;-</td>
+<td class="org-left"><b><a href="http://wikiba.se/">Wikibase</a></b></td>
+<td class="org-left">-&gt;</td>
+<td class="org-left">(UNC Libraries Linked Data portal?)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</div>
+</div>
+<script src="./lib/js/head.min.js"></script>
+<script src="./js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.00,
+minScale: 1.00,
+maxScale: 1.00,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
