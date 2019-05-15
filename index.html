@@ -26,12 +26,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2><p class="date">Created: 2019-05-15 Wed 15:47</p>
+<section id="sec-title-slide" data-background="./images/Background1.png"><h1 class="title">Overview of TRLN Discovery Data</h1><h2 class="author">Kristina M. Spurgin</h2><h2 class="date">2019-05-16</h2>
 </section>
 
 <section>
-<section id="slide-org5af514d">
-<h2 id="org5af514d">What we'll cover</h2>
+<section id="slide-org8018157">
+<h2 id="org8018157">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orgac371ad">
-<h2 id="orgac371ad">What we won't cover</h2>
+<section id="slide-orgda5702e">
+<h2 id="orgda5702e">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -63,14 +63,15 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 <li>Data pulled in from various APIs at catalog page load time</li>
 
 </ul></li>
+<li>Helper applications used to generate lookups/data transformation maps</li>
 
 </ul>
 
 </section>
 </section>
 <section>
-<section id="slide-orge4f75bb">
-<h2 id="orge4f75bb">ETL overview - Institution-specific processes</h2>
+<section id="slide-orge93bdd3">
+<h2 id="orge93bdd3">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -101,6 +102,12 @@ Source data (MARCXML or MARC binary)
 
 <aside class="notes">
 <p>
+Getting the MARC source data out of ILS: 
+Completely institution-specific. 
+This is the "extract" step and it's a big improvement for some institutions that TRLN Discovery largely decouples the extract part from the transformation part. 
+</p>
+
+<p>
 MARC-to-Argot:
 </p>
 <ul>
@@ -126,8 +133,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org7549da9">
-<h2 id="org7549da9">ETL overview - Central processes</h2>
+<section id="slide-orge0839f5">
+<h2 id="orge0839f5">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -182,8 +189,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org0245e89">
-<h2 id="org0245e89">Transformation: MARC -&gt; Argot - Name data</h2>
+<section id="slide-org56ad64f">
+<h2 id="org56ad64f">Transformation: MARC -&gt; Argot - Name data</h2>
 <div class="column" style="float:left; width: 50%">
 <p>
 <b>MARC</b>
@@ -231,8 +238,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orgd237ffe">
-<h2 id="orgd237ffe">Transformation: MARC -&gt; Argot - Title and work data</h2>
+<section id="slide-org8c5c180">
+<h2 id="org8c5c180">Transformation: MARC -&gt; Argot - Title and work data</h2>
 <div class="column" style="float:left; width: 50%">
 <p>
 <b>MARC</b>
@@ -281,10 +288,10 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org40e152d">
-<h2 id="org40e152d">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
+<section id="slide-org741df47">
+<h2 id="org741df47">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
 <p>
-Illustrates Argot as abstract data pattern language
+Principles: Argot as pattern language for data &#x2013; Driven by desired SEARCH and DISPLAY behavior in application
 </p>
 
 <div class="column" style="float:left; width: 50%">
@@ -337,10 +344,9 @@ Illustrates Argot as abstract data pattern language
 "author_suggest": [
   "Intiz̤ār Ḥusain, 1925-2016",
   "Zaidi, Nishat",
-  "Bhalla, Alok",
-  "Intiz̤ār Ḥusain, 1925-2016.",
-  "Intiz̤ār Ḥusain, 1925-2016."
+  "Bhalla, Alok"
 ],
+"creator_main_a": ["Intiz̤ār Ḥusain, 1925-2016, author"],
 "statement_of_responsibility_t_stored": "Intizar Husain ; translated
    by Nishat Zaidi and Alok Bhalla."
 }
@@ -348,11 +354,58 @@ Illustrates Argot as abstract data pattern language
 
 </div>
 
+<aside class="notes">
+<p>
+The Solr data required to drive our desired SEARCH and DISPLAY behaviors requires the same source data to be written to separate fields in slightly different ways. 
+</p>
+
+<p>
+Fields ending with _t are going to be sent through special processes (normalization, parsing, etc) and be indexed to support searching. 
+</p>
+
+<p>
+Fields ending with _a are stored in the index to be used in building the display.
+</p>
+
+<p>
+Writing the logic to directly transform all MARC fields where names occur into the format on the right would have been quite repetitive and tedious. 
+</p>
+
+<p>
+Instead we chose to directly transform MARC into Argot that indentifies the name components that we can use as a pattern to generate all the repetitive stuff needed in Solr. 
+</p>
+
+<p>
+names_creator_t and names_contributor_t are both searchable in the keyword and author indexes, but we wanted to relevance boost known creators in this search. We use the type element to derive the field name, and index the whole name+rel together so if someone specifically wants this person as a translator, they can find that. 
+</p>
+
+<p>
+author_facet_f contains names that will appear in the author facet. We don't want relator terms included there. Lots of our records don't have relator terms in them, and we did not want to build INTO the catalog ways to search that we knew would return artificially small/split results. 
+</p>
+
+<p>
+names_a is our names for display. We have the names part separate from the relator part, so that the text from both can be shown, but only the name part gets turned into a search query link (for the same reason we exclude relators from the author facet).
+</p>
+
+<p>
+author_suggest drives the as-you-type suggestions, which needs its own fields in Solr. 
+</p>
+
+<p>
+creator_main_a is stored for display because not every record has a statement of responsibility we can display. It doesn't need to be indexed because whatever is in this field will be indexed as author in names_creator_t.
+</p>
+
+<p>
+statement_of_responsibility_t_stored is indexed as author data becasue it usually contains author names in a different form than the other fields, providing some kind of variant access. It also needs to be displayed&#x2026; 
+</p>
+
+</aside>
+
 </section>
 </section>
 <section>
-<section id="slide-org626b9c6">
-<h2 id="org626b9c6">Transformation: Enriched Argot -&gt; Solr</h2>
+<section id="slide-org20ff8d2">
+<h2 id="org20ff8d2">Transformation: Enriched Argot -&gt; Solr</h2>
 <p>
 One Enriched Argot field becomes two Solr fields
 </p>
@@ -378,19 +431,6 @@ statement_of_responsibility_a
 statement_of_responsibility_t
 </pre>
 
-</div>
-
-
-
-</section>
-</section>
-<section>
-<section id="slide-orgbbd0efb">
-<h2 id="orgbbd0efb">blank</h2>
-
-<div id="org88047b2" class="figure">
-<p><img src="./images/label.png" alt="label.png" height="100%" />
-</p>
 </div>
 </section>
 </section>

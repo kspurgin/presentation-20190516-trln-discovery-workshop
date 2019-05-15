@@ -41,6 +41,7 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
    - Finding aid data merged into bib data
    - Syndetics data merged into bib data
    - Data pulled in from various APIs at catalog page load time
+ - Helper applications used to generate lookups/data transformation maps
 
 * ETL overview - Institution-specific processes
 Source data (MARCXML or MARC binary)
@@ -58,6 +59,10 @@ Source data (MARCXML or MARC binary)
 ((([[https://github.com/trln/spofford-client][spofford-client]]))) 
 
 #+BEGIN_NOTES
+Getting the MARC source data out of ILS: 
+Completely institution-specific. 
+This is the "extract" step and it's a big improvement for some institutions that TRLN Discovery largely decouples the extract part from the transformation part. 
+
 MARC-to-Argot:
  - allows most of the standard transformation of MARC to Argot to be written ONCE and used by all institutions
  - any institution can override the way any Argot field is populated, if they need to do something that isn't standard
@@ -166,7 +171,7 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 #+REVEAL_HTML: </div>
 
 * Transformation: Argot -> Enriched Argot - Name data
-Illustrates Argot as abstract data pattern language
+Principles: Argot as pattern language for data -- Driven by desired SEARCH and DISPLAY behavior in application
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 *Argot*
@@ -214,16 +219,40 @@ Illustrates Argot as abstract data pattern language
 "author_suggest": [
   "Intiz̤ār Ḥusain, 1925-2016",
   "Zaidi, Nishat",
-  "Bhalla, Alok",
-  "Intiz̤ār Ḥusain, 1925-2016.",
-  "Intiz̤ār Ḥusain, 1925-2016."
+  "Bhalla, Alok"
 ],
+"creator_main_a": ["Intiz̤ār Ḥusain, 1925-2016, author"],
 "statement_of_responsibility_t_stored": "Intizar Husain ; translated
    by Nishat Zaidi and Alok Bhalla."
 }
 #+END_SRC
 
 #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The Solr data required to drive our desired SEARCH and DISPLAY behaviors requires the same source data to be written to separate fields in slightly different ways. 
+
+Fields ending with _t are going to be sent through special processes (normalization, parsing, etc) and be indexed to support searching. 
+
+Fields ending with _a are stored in the index to be used in building the display.
+
+Writing the logic to directly transform all MARC fields where names occur into the format on the right would have been quite repetitive and tedious. 
+
+Instead we chose to directly transform MARC into Argot that indentifies the name components that we can use as a pattern to generate all the repetitive stuff needed in Solr. 
+
+names_creator_t and names_contributor_t are both searchable in the keyword and author indexes, but we wanted to relevance boost known creators in this search. We use the type element to derive the field name, and index the whole name+rel together so if someone specifically wants this person as a translator, they can find that. 
+
+author_facet_f contains names that will appear in the author facet. We don't want relator terms included there. Lots of our records don't have relator terms in them, and we did not want to build INTO the catalog ways to search that we knew would return artificially small/split results. 
+
+names_a is our names for display. We have the names part separate from the relator part, so that the text from both can be shown, but only the name part gets turned into a search query link (for the same reason we exclude relators from the author facet).
+
+author_suggest drives the as-you-type suggestions, which needs its own fields in Solr. 
+
+creator_main_a is stored for display because not every record has a statement of responsibility we can display. It doesn't need to be indexed because whatever is in this field will be indexed as author in names_creator_t.
+
+statement_of_responsibility_t_stored is indexed as author data becasue it usually contains author names in a different form than the other fields, providing some kind of variant access. It also needs to be displayed... 
+
+#+END_NOTES
 
 * Transformation: Enriched Argot -> Solr
 One Enriched Argot field becomes two Solr fields
@@ -246,14 +275,6 @@ statement_of_responsibility_t
 #+END_SRC
 
 #+REVEAL_HTML: </div>
-
-
-
-* blank
-#+NAME:  fig:label.png
-#+ATTR_HTML: :height 100%
-[[./images/label.png]]
-
 
 
 
