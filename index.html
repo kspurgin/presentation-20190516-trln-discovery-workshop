@@ -30,8 +30,8 @@
 </section>
 
 <section>
-<section id="slide-org8018157">
-<h2 id="org8018157">What we'll cover</h2>
+<section id="slide-org0c41ff7">
+<h2 id="org0c41ff7">What we'll cover</h2>
 <ul>
 <li>High level overview of data in TRLN Discovery</li>
 <li>ETL process/tooling</li>
@@ -50,8 +50,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orgda5702e">
-<h2 id="orgda5702e">What we won't cover</h2>
+<section id="slide-org5bb1501">
+<h2 id="org5bb1501">What we won't cover</h2>
 <ul>
 <li>The details of anything</li>
 <li>Processes for non-MARC data sources
@@ -70,8 +70,8 @@ Our ILS-based catalogs, with their MARC-based bibliographic data, are the larges
 </section>
 </section>
 <section>
-<section id="slide-orge93bdd3">
-<h2 id="orge93bdd3">ETL overview - Institution-specific processes</h2>
+<section id="slide-orgfb4bd3e">
+<h2 id="orgfb4bd3e">ETL overview - Institution-specific processes</h2>
 <p>
 Source data (MARCXML or MARC binary)
 </p>
@@ -133,8 +133,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-orge0839f5">
-<h2 id="orge0839f5">ETL overview - Central processes</h2>
+<section id="slide-org4461ef4">
+<h2 id="org4461ef4">ETL overview - Central processes</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -155,8 +155,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 <tbody>
 <tr>
 <td class="org-left">(((<a href="https://github.com/trln/trln-ingest">Spofford</a>)))</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Maintain last-ingested Argot for each item, transaction info in PostgreSQL db</td>
+<td class="org-left">PostgreSQL db</td>
+<td class="org-left">Maintain last-ingested Argot for each item, transaction info, deletion status</td>
 </tr>
 
 <tr>
@@ -189,8 +189,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org56ad64f">
-<h2 id="org56ad64f">Transformation: MARC -&gt; Argot - Name data</h2>
+<section id="slide-org24fc2bf">
+<h2 id="org24fc2bf">Transformation: MARC -&gt; Argot - Name data</h2>
 <div class="column" style="float:left; width: 50%">
 <p>
 <b>MARC</b>
@@ -238,8 +238,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org8c5c180">
-<h2 id="org8c5c180">Transformation: MARC -&gt; Argot - Title and work data</h2>
+<section id="slide-orgee3c843">
+<h2 id="orgee3c843">Transformation: MARC -&gt; Argot - Title and work data</h2>
 <div class="column" style="float:left; width: 50%">
 <p>
 <b>MARC</b>
@@ -288,8 +288,8 @@ Non-MARC source data note: Basically any data that can be transformed into valid
 </section>
 </section>
 <section>
-<section id="slide-org741df47">
-<h2 id="org741df47">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
+<section id="slide-org4d036f2">
+<h2 id="org4d036f2">Transformation: Argot -&gt; Enriched Argot - Name data</h2>
 <p>
 Principles: Argot as pattern language for data &#x2013; Driven by desired SEARCH and DISPLAY behavior in application
 </p>
@@ -404,8 +404,8 @@ statement_of_responsibility_t_stored is indexed as author data becasue it usuall
 </section>
 </section>
 <section>
-<section id="slide-org20ff8d2">
-<h2 id="org20ff8d2">Transformation: Enriched Argot -&gt; Solr</h2>
+<section id="slide-orgf945767">
+<h2 id="orgf945767">Transformation: Enriched Argot -&gt; Solr</h2>
 <p>
 One Enriched Argot field becomes two Solr fields
 </p>
